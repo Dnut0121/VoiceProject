@@ -2,11 +2,6 @@ import torch
 import torch.nn as nn
 
 class HiFiGANGenerator(nn.Module):
-    """
-    Simplified HiFi-GAN 스타일 Generator
-    Input: mel-spectrogram (B, n_mels, T)
-    Output: waveform (B, 1, T_raw)
-    """
     def __init__(self, n_mels=80, channels=512,
                  upsample_rates=[8,8,2,2],
                  upsample_kernel_sizes=[16,16,4,4]):

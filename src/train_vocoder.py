@@ -34,16 +34,13 @@ class VocoderDataset(Dataset):
         wav = torch.from_numpy(wav).unsqueeze(0).float()
         return mel, wav
 
-# MR-STFT Loss 함수
 def ms_stft_loss(x, y):
-    # x, y: (B, 1, T_raw)
-    x = x.squeeze(1)  # (B, T_raw)
+    x = x.squeeze(1)
     y = y.squeeze(1)
-    # 창 함수 지정 (Hann window)
     window = torch.hann_window(N_FFT, device=x.device)
     X = torch.stft(x, n_fft=N_FFT, hop_length=HOP, window=window, return_complex=True)
     Y = torch.stft(y, n_fft=N_FFT, hop_length=HOP, window=window, return_complex=True)
-    # 프레임 길이 정렬
+
     min_frames = min(X.size(-1), Y.size(-1))
     X = X[..., :min_frames]
     Y = Y[..., :min_frames]
